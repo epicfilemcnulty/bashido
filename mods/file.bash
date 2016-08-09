@@ -9,7 +9,7 @@ SELFDOC
 
     if bashido.check_args_count 1 "$@"; then bashido.show_doc ${FUNCNAME}; return 1; fi
 
-    file="${1}";
+    local file="${1}"; shift
     openssl enc -aes-256-cbc -in "${file}" -out "${file}.enc"
 }
 
@@ -28,11 +28,11 @@ SELFDOC
 
     if bashido.check_args_count 1 "$@"; then bashido.show_doc ${FUNCNAME}; return 1; fi
 
-    file="${1}";
+    local file="${1}"; shift
     if [[ ! -f ${file%.enc} ]]; then
-        outFile=${file%.enc}
+        local outFile=${file%.enc}
     else
-        outFile="${file}.dec"
+        local outFile="${file}.dec"
     fi
     openssl enc -aes-256-cbc -d -in "${file}" -out "${outFile}"
 }
@@ -46,7 +46,9 @@ file.rmi () {
 # Use 'ls -i' or 'stat' to get a file's inode number
 SELFDOC
     if bashido.check_args_count 1 "$@"; then bashido.show_doc "$FUNCNAME"; return 1; fi
-    find . -inum ${1} -exec rm -i {} \;
+    
+    local inodeNumber=${1}; shift
+    find . -inum ${inodeNumber} -exec rm -i {} \;
 }
 
 file.swap () {
@@ -56,8 +58,12 @@ file.swap () {
 # DESCRIPTION: Swaps contents of file1 and file2
 SELFDOC
      if bashido.check_args_count 2 "$@"; then bashido.show_doc "$FUNCNAME"; return 1; fi
-     tmp_name="/tmp/TMP_${RANDOM}"
-     mv "${1}" "${tmp_name}" && mv "${2}" "${1}" && mv "${tmp_name}" "${2}"
+    
+     local file1="${1}"; shift
+     local file2="${1}"; shift
+
+     local tmp_name="/tmp/TMP_${RANDOM}"
+     mv "${file1}" "${tmp_name}" && mv "${file2}" "${file1}" && mv "${tmp_name}" "${file2}"
 }
 
 file.chext () {
@@ -73,12 +79,16 @@ file.chext () {
 #   dir which have extension1
 SELFDOC
     if bashido.check_args_count 1 "$@"; then bashido.show_doc "$FUNCNAME"; return 1; fi
-    for files in *.${1}
+
+    local ext1="${1}"; shift
+    local ext2="${2}"; shift
+
+    for files in *.${ext1}
     do
-        if [[ -z "${2}" ]]; then
-            mv "$files" "${files%.${1}}"
+        if [[ -z "${ext2}" ]]; then
+            mv "$files" "${files%.${ext1}}"
         else
-            mv "$files" "${files%.${1}}.${2}"
+            mv "$files" "${files%.${ext1}}.${ext2}"
         fi
     done
 
