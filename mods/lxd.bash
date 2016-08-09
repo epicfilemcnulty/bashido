@@ -72,6 +72,20 @@ SELFDOC
     done
 }
 
+lxd.rmi () {
+<<SELFDOC
+# USAGE:
+#   lxd.rmi imageName|imageId [imageName|imageId] [...]
+#
+# DESCRIPTION:
+#   Removes one or more container image(s)
+SELFDOC
+    
+    if bashido.check_args_count 1 "$@"; then bashido.show_doc ${FUNCNAME}; return 1; fi
+    for image in "${@}"; do
+        lxc image delete "${image}"
+    done    
+}
 
 lxd.run () {
 <<SELFDOC
