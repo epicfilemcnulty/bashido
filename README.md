@@ -16,7 +16,7 @@ Table of Contents
 About
 =====
 
-Being a sysadmin, devops and a bit of a programmer, I do spend a lot of time in my terminal. There are a good deal of useful utilities in unix/linux CLI world, but sometimes you just feel like writing a small wrapper around one of your favorite/frequently used tools (or a tool chain), to make it more convenient, provide a simpler 'API', add fancy parsing to outputs, etc. 
+Being a sysadmin, devops and a bit of a programmer, I do spend a lot of time in my terminal. There is a good deal of useful utilities in unix/linux CLI world, but sometimes you just feel like writing a small wrapper for one of your favorite/frequently used tools (or a tool chain), to make it more convenient, provide a simpler 'API', add fancy parsing of outputs, etc. 
 
 **Bashido** is an attempt to collect all these wrappers I wrote (or shamelessly copy-pasted from far away sinister corners of the internet, tortured in my digital dungeons for a while, and reissued as perls of my own genius) over the years, structure them and make them easy to (re)use in everyday's CLI life. The wrappers are implemented in bash scripting language, hence the name (bash + japanese term *bushido*, which stands for "the way of warrior", so you may think of **bashido** as the way of the bash warrior).   
 
