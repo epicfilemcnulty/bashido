@@ -73,7 +73,7 @@ Systemwide
 
 Clone this repository (or download it as an archive and unpack it) into `/etc/bashido` directory on your system (or any other directory you prefer):
 
-`sudo git clone gitlab.com:bashido/bashido /etc/bashido`
+`sudo git clone https://gitlab.com/bashido/bashido.git /etc/bashido`
 
 Now, to have bashido files sourced upon a user's login, add `bashido.sh` file under `/etc/profile.d` directory, which will do the job.
 
@@ -90,7 +90,7 @@ Locally
 ------------
 
 ```
-git clone gitlab.com:bashido/bashido ~/.bashido
+git clone https://gitlab.com/bashido/bashido.git ~/.bashido
 cat <<EOF >> ~/.bash_profile
 
 BASHIDO=${HOME}/.bashido
