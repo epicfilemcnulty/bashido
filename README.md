@@ -20,9 +20,9 @@ Being a sysadmin, devops and a bit of a programmer, I do spend a lot of time in 
 
 **Bashido** is an attempt to collect all these wrappers I wrote (or shamelessly copy-pasted from far away sinister corners of the internet, tortured in my digital dungeons for a while, and reissued as perls of my own genius) over the years, structure them and make them easy to (re)use in everyday's CLI life. The wrappers are implemented in bash scripting language, hence the name (bash + japanese term *bushido*, which stands for "the way of warrior", so you may think of **bashido** as the way of the bash warrior).   
 
-**Bashido** is a collection of bash modules. A module is just a set of bash functions, which share a common namespace and a common *raison d'etre*, so to say. 
+**Bashido** is a collection of bash modules. A module is just a set of bash functions that share a common namespace and a common *raison d'etre*, so to say. 
 
-Each module is named after the tool it "wraps", or, if there are several underlying tools, after their main function. For example, bashido module *file* combines functions to perform different operations with files, but uses several tools to do that.
+Each module is named after the tool it "wraps", or, if there are several underlying tools, it's named after the main function of these tools. For example, bashido module *file* combines functions to perform different operations with files, but uses several tools to do that.
 
 Module's name also serves as the namespace, all functions within the module are named `module.function`. This approach reflects the structure and benefits CLI usage (in terms of tab completion). 
 
@@ -32,17 +32,17 @@ Main principles upon which bashido is built:
 
 * Thorough documentation.
 
-Every function contains self documentation, which can be displayed either via firing `module.function --help` or using auxiliary function from the bashido main module: `bashido.show_doc module.function`. Moreover, if a module function is called with the wrong number of arguments, it will also display its' own documentation.
+Every function is self-documented, help can be displayed by typing `module.function --help` or using an auxiliary function from the bashido main module: `bashido.show_doc module.function`. Moreover, if there is a wrong number of arguments specified when calling a function, self-documentation is also displayed.
 
 * Simplicity.
 
-Don't use extra tools if you can do without them. Ideally, if it can be done with pure bash without becoming a monstrosity, stick to bash.
+Don't use extra tools if you can do without them. Ideally, if something can be done with pure bash without becoming a monstrosity, stick to bash.
 
-Each module/function should make it easier to use the underlying tool, not complicate things further. If it's easier to use the underlying tool directly than an inteface provided by a function, drop the function and start over.
+Each module/function should make it easier to use the underlying tool, it should not complicate things further. If it's easier to use the underlying tool itself than an inteface provided by a function, drop the function and start over.
 
 * Bashism.
 
-Bashido is about bash. So bash specific features, especially the ones which make code more elegant or shorter, are welcomed here.
+Bashido is about bash. So bash specific features, especially the ones which make the code more elegant or shorter, are welcomed here.
 
 * Exemplariness (this one is rather ambitious)
 
@@ -102,7 +102,7 @@ EOF
 Modules
 =====
 
-This section contains only cursory documentation of each module, for the detailed usage instructions please use `module.function --help` option.
+This section contains only cursory documentation on each module, for the detailed usage instructions please use `module.function --help` option.
 
 apt
 ----
@@ -117,7 +117,7 @@ repositories only.
 cert
 -----
 
-Set of functions to ease work with self-signed certificates, certificate requests, etc. Under the hood the module uses **openssl**. 
+A set of functions to ease work with self-signed certificates, certificate requests, etc. The module uses **openssl** under the hood.
 
 * **cert.init_CA**
 Unfortunately, certain certificate operations (generating a certificate request with SANS, or signing a certificate request with localy generated root certificate) can't be performed without external configs -- some options can't be passed as command line arguments to openssl. Therefore, the said external configs should be generated beforehand. This function creates required configs and generates a self-signed root certificate. The function should be invoked before using **cert.sign** or **cert.request**.
