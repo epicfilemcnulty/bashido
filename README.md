@@ -57,7 +57,7 @@ The current status is beta. Bashido is already usable and quite helpful, but doc
 Requirements
 ============
 
-Obviously, you must have a **bash** shell. Since bashido is all about providing interfaces(or wrappers) to different CLI tools, to make actual use of it you will have to have relevant tools installed. For example, bashido *git* module assumes that you have *git* package in your system, *docker* module relies on *docker*, etc.
+Obviously, you must have a **bash** shell. Since bashido is all about providing interfaces (or wrappers) to different CLI tools, to make actual use of it you will have to have relevant tools installed. For example, bashido *git* module assumes that you have *git* package in your system, *docker* module relies on *docker*, etc.
 
 As even a minimal debian installation is certain to have the famous usual suspects, **grep**, **sed**, **awk**, **head**, **tail** and the like, it seemed safe to use these tools where appropriate.
 
