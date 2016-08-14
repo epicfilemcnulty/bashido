@@ -111,6 +111,23 @@ SELFDOC
 }
 
 
+lxd.bash () {
+<<SELFDOC
+# USAGE: lxd.bash containerName|containerId 
+#
+# DESCRIPTION:
+#   Interactively executes /bin/bash inside the containerName|containerId.
+#   To be precise, it's just a wrapper around 
+#   'lxc exec containerName /bin/bash' command.
+SELFDOC
+    
+    if bashido.check_args_count 1 "$@"; then bashido.show_doc ${FUNCNAME}; return 1; fi
+
+    local name=${1}; shift
+    lxc exec ${name} /bin/bash 
+
+}
+
 lxd.ssh () {
 <<SELFDOC
 # USAGE: 
