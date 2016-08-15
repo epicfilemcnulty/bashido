@@ -114,6 +114,8 @@ docker.ip () {
 SELFDOC
 
     if bashido.check_args_count 1 "$@"; then bashido.show_doc ${FUNCNAME}; return 1; fi
+
+    local containerName="${1}"; shift
     sudo docker inspect --format='{{.NetworkSettings.IPAddress}}' ${containerName}
 
 }
