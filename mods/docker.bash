@@ -164,6 +164,13 @@ SELFDOC
 
 }
 
+docker.killall () {
+
+    local containersList=$(docker.ls -a --format '{{ .Names }}' | tr '\n' ' ')
+    docker.kill ${containersList}
+
+}
+
 docker.restart () {
 <<SELFDOC
 # USAGE:
