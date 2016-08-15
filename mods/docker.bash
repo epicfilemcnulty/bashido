@@ -105,6 +105,19 @@ SELFDOC
     export DOCKER_IMAGE="${1}"
 }
 
+docker.ip () {
+<<SELFDOC
+# USAGE: docker.ip containerName|containerId
+#
+# DESCRIPTION:
+#   Outputs containerName's ip address
+SELFDOC
+
+    if bashido.check_args_count 1 "$@"; then bashido.show_doc ${FUNCNAME}; return 1; fi
+    sudo docker inspect --format='{{.NetworkSettings.IPAddress}}' ${containerName}
+
+}
+
 docker.ssh () {
 <<SELFDOC
 # USAGE: 
