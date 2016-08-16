@@ -62,6 +62,45 @@ SELFDOC
 }
 alias docker.ps='docker.ls'
 
+docker.lvs () {
+<<SELFDOC
+# USAGE: docker.lvs [optional args]
+#
+# DESCRIPTION:
+#   Lists docker volumes. You man provide
+#   any additional arguments that 'docker volume' accepts
+SELFDOC
+
+    if bashido.check_args_count 0 "$@"; then bashido.show_doc ${FUNCNAME}; return 1; fi
+    sudo docker volume ls "${@}"
+}
+
+docker.rmv () {
+<<SELFDOC
+# USAGE: docker.rmv volumeName|volumeId [volumeName|volumeId]
+#
+# DESCRIPTION
+#   Removes one or more docker volumes
+SELFDOC    
+
+    if bashido.check_args_count 1 "$@"; then bashido.show_doc ${FUNCNAME}; return 1; fi
+    sudo docker volume rm ${@}
+}
+
+docker.rmvall () {
+<<SELFDOC
+# USAGE: docker.rmvall
+#
+# DESCRIPTION:
+#   Removes ALL docker volumes. Be careful with this one,
+#   there is no confirmation before deletion, the function
+#   assumes that you know what you are doing.
+SELFDOC
+
+    if bashido.check_args_count 0 "$@"; then bashido.show_doc ${FUNCNAME}; return 1; fi
+    docker.lvs -q | sudo xargs docker volume rm
+}
+
 docker.li () {
 <<SELFDOC
 # USAGE: docker.li [optional args]
