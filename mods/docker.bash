@@ -81,10 +81,10 @@ docker.rmv () {
 #
 # DESCRIPTION
 #   Removes one or more docker volumes
-SELFDOC    
+SELFDOC
 
     if bashido.check_args_count 1 "$@"; then bashido.show_doc ${FUNCNAME}; return 1; fi
-    sudo docker volume rm ${@}
+    sudo docker volume rm "${@}"
 }
 
 docker.rmvall () {
