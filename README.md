@@ -78,7 +78,7 @@ Clone this repository (or download it as an archive and unpack it) into `/etc/ba
 Now, to have bashido files sourced upon a user's login, add `bashido.sh` file under `/etc/profile.d` directory, which will do the job.
 
 ```
-cat <<EOF | sudo tee /etc/profile.d/bashido.sh
+cat <<'EOF' | sudo tee /etc/profile.d/bashido.sh
 
 export BASHIDO=/etc/bashido
 [[ -r ${BASHIDO}/main.bash ]] && source ${BASHIDO}/main.bash
@@ -91,7 +91,7 @@ Locally
 
 ```
 git clone https://gitlab.com/bashido/bashido.git ~/.bashido
-cat <<EOF >> ~/.bash_profile
+cat <<'EOF' >> ~/.bash_profile
 
 BASHIDO=${HOME}/.bashido
 [[ -r ${BASHIDO}/main.bash ]] && source ${BASHIDO}/main.bash
