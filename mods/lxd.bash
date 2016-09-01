@@ -105,7 +105,7 @@ SELFDOC
     local image=${1}; shift
 
     if [[ ! -z "${image}" ]]; then
-        LXD_IMAGE="$image}"
+        LXD_IMAGE="${image}"
     fi
     lxc launch ${LXD_IMAGE} ${name}
 }
