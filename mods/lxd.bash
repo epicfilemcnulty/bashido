@@ -148,7 +148,7 @@ SELFDOC
     if bashido.check_args_count 1 "$@"; then bashido.show_doc ${FUNCNAME}; return 1; fi
 
     local name=${1}; shift
-    local ip=$(lxd.ip ${name}|head -n1)
+    local ip=$(lxd.ip ${name}|grep -v '127.0.0.1')
 
     screen.set_name ${name}
     ssh ${ip}
