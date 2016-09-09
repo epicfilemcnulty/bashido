@@ -108,7 +108,8 @@ docker.rmvall () {
 SELFDOC
 
     if bashido.check_args_count 0 "$@"; then bashido.show_doc ${FUNCNAME}; return 1; fi
-    docker.lvs -q | xargs docker.rmv
+    local volumes=$(docker.lvs -q)
+    docker.rmv "${volumes}"
 }
 
 docker.li () {
