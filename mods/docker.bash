@@ -1,3 +1,13 @@
+# If user is docker group or happens to be root
+# we don't need to use sudo, so we just set sudoCmd variable 
+# to an empty string 
+
+if ( groups | grep docker > /dev/null ) || [[ "$(id -u)" == "0" ]]; then
+    export sudoCmd=''
+else
+    export sudoCmd=sudo
+fi
+
 docker.bootstrap () {
 <<SELFDOC
 # USAGE: docker.bootstrap debian|ubuntu [release] [imageName]
@@ -38,7 +48,7 @@ SELFDOC
     sudo ${cmd} ${release} ${destDir} ${mirror} || return 1
 
     cd "${destDir}"
-    sudo tar -c . | sudo docker import --change 'CMD ["/sbin/init"]' - ${imageName}
+    sudo tar -c . | ${sudoCmd} docker import --change 'CMD ["/sbin/init"]' - ${imageName}
     cd -
     sudo rm -rf ${workDir}/${destDir}
 
@@ -57,7 +67,7 @@ docker.ls () {
 SELFDOC
 
   if bashido.check_args_count 0 "$@"; then bashido.show_doc ${FUNCNAME}; return 1; fi
-  sudo docker ps "${@}"
+  ${sudoCmd} docker ps "${@}"
 
 }
 alias docker.ps='docker.ls'
@@ -72,7 +82,7 @@ docker.lvs () {
 SELFDOC
 
     if bashido.check_args_count 0 "$@"; then bashido.show_doc ${FUNCNAME}; return 1; fi
-    sudo docker volume ls "${@}"
+    ${sudoCmd} docker volume ls "${@}"
 }
 
 docker.rmv () {
@@ -84,7 +94,7 @@ docker.rmv () {
 SELFDOC
 
     if bashido.check_args_count 1 "$@"; then bashido.show_doc ${FUNCNAME}; return 1; fi
-    sudo docker volume rm "${@}"
+    ${sudoCmd} docker volume rm "${@}"
 }
 
 docker.rmvall () {
@@ -98,7 +108,7 @@ docker.rmvall () {
 SELFDOC
 
     if bashido.check_args_count 0 "$@"; then bashido.show_doc ${FUNCNAME}; return 1; fi
-    docker.lvs -q | sudo xargs docker volume rm
+    docker.lvs -q | xargs docker.rmv
 }
 
 docker.li () {
@@ -111,7 +121,7 @@ docker.li () {
 SELFDOC
 
   if bashido.check_args_count 0 "$@"; then bashido.show_doc ${FUNCNAME}; return 1; fi
-  sudo docker images "${@}"
+  ${sudoCmd} docker images "${@}"
 
 }
 
@@ -124,7 +134,7 @@ docker.rmi () {
 SELFDOC
 
   if bashido.check_args_count 1 "$@"; then bashido.show_doc ${FUNCNAME}; return 1; fi
-  sudo docker rmi "${@}"
+  ${sudoCmd} docker rmi "${@}"
 
 }
 
@@ -155,7 +165,7 @@ SELFDOC
     if bashido.check_args_count 1 "$@"; then bashido.show_doc ${FUNCNAME}; return 1; fi
 
     local containerName="${1}"; shift
-    sudo docker inspect --format='{{.NetworkSettings.IPAddress}}' ${containerName}
+    ${sudoCmd} docker inspect --format='{{.NetworkSettings.IPAddress}}' ${containerName}
 
 }
 
@@ -178,7 +188,7 @@ SELFDOC
 
     if bashido.check_args_count 1 "$@"; then bashido.show_doc ${FUNCNAME}; return 1; fi
     local containerName=${1}
-    local ip=$(sudo docker inspect --format='{{.NetworkSettings.IPAddress}}' ${containerName})
+    local ip=$(docker.ip ${containerName})
     screen.set_name ${containerName}
     ssh ${ip}
     screen.set_name 'bash'
@@ -197,8 +207,8 @@ SELFDOC
     if bashido.check_args_count 1 "$@"; then bashido.show_doc ${FUNCNAME}; return 1; fi
 
     for container in "${@}"; do
-        sudo docker stop ${container} 
-        sudo docker rm ${container}
+        ${sudoCmd} docker stop ${container} 
+        ${sudoCmd} docker rm ${container}
     done
 
 }
@@ -222,8 +232,8 @@ SELFDOC
     if bashido.check_args_count 1 "$@"; then bashido.show_doc ${FUNCNAME}; return 1; fi
 
     for container in "${@}"; do
-        sudo docker stop ${container}
-        sudo docker start ${container}
+        ${sudoCmd} docker stop ${container}
+        ${sudoCmd} docker start ${container}
     done
 }
 
@@ -241,7 +251,7 @@ SELFDOC
     if bashido.check_args_count 1 "$@"; then bashido.show_doc ${FUNCNAME}; return 1; fi
 
     local name=${1}; shift
-    local cmd='sudo docker run -d -t'
+    local cmd="${sudoCmd} docker run -d -t"
 
     [[ ! -z "${1}" ]] && DOCKER_IMAGE="${1}"; shift
 
@@ -262,7 +272,7 @@ SELFDOC
     if bashido.check_args_count 1 "$@"; then bashido.show_doc ${FUNCNAME}; return 1; fi
 
     local name=${1}; shift
-    local cmd='sudo docker exec -i -t'
+    local cmd="${sudoCmd} docker exec -i -t"
 
     [[ ! -z "${1}" ]] 
 
