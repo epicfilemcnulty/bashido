@@ -51,7 +51,7 @@ There are lots of guides and articles on how to write bash scripts in the right 
 Status
 ====
 
-The current status is beta. Bashido is already usable and quite helpful, but documentation coverage is not complete, some code needs revision, et caetera, et caetera. First release is due at the end of August, 2016 a.d. Meanwhile, reviews, critics and suggestions are more than welcomed. 
+The current status is beta. Bashido is already usable and quite helpful, but documentation coverage is not complete, some code needs revision, et caetera, et caetera. As soon as I feel it's ready, there will be the first production release. Meanwhile, reviews, critics and suggestions are more than welcomed. 
 
 
 Requirements
