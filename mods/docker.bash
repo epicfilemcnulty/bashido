@@ -109,7 +109,7 @@ SELFDOC
 
     if bashido.check_args_count 0 "$@"; then bashido.show_doc ${FUNCNAME}; return 1; fi
     local volumes=$(docker.lvs -q)
-    docker.rmv "${volumes}"
+    docker.rmv ${volumes}
 }
 
 docker.li () {
