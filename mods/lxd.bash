@@ -67,7 +67,7 @@ SELFDOC
     if bashido.check_args_count 1 "$@"; then bashido.show_doc ${FUNCNAME}; return 1; fi
 
     for container in "${@}"; do
-        lxc stop "${container}"
+        lxc stop --force "${container}" 2>/dev/null
         lxc delete "${container}"
     done
 }
