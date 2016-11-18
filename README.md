@@ -179,7 +179,7 @@ file
 * **file.chext**
 Changes file extensions in the current directory.
 
-* **file.encryp**
+* **file.encrypt**
 Encrypts a file using openssl aes-256-cbc encryption.
 
 * **file.decrypt**
