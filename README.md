@@ -100,7 +100,7 @@ EOF
 ```
 
 Modules
-=====
+=======
 
 This section contains only cursory documentation on each module, for the detailed usage instructions please use `module.function --help` option.
 
