@@ -9,7 +9,9 @@ SELFDOC
     profileName=${1}
     if bashido.check_args_count 1 "$@"; then bashido.show_doc "$FUNCNAME"; return 1; fi
     [[ -h ${HOME}/.ssh/config ]] && rm ${HOME}/.ssh/config
+    [[ -h ${HOME}/.ssh/hosts ]] && rm ${HOME}/.ssh/hosts
     ln -s ${HOME}/.ssh/configs/${profileName} ${HOME}/.ssh/config
+    ln -s ${HOME}/.ssh/known_hosts/${profileName} ${HOME}/.ssh/hosts
 }
 
 ssh.list_profiles () {
