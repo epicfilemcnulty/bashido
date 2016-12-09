@@ -1,3 +1,10 @@
+LXD_NETWORK=${LXD_NETWORK:-lxd0}
+LXD_DOMAIN=${LXD_DOMAIN:-lxd}
+if [[ -z "${LXD_DNS}" ]]; then
+    LXD_DNS=$(lxc network get ${LXD_NETWORK} ipv4.address)
+    LXD_DNS=${LXD_DNS%%/*}
+fi
+
 lxd.ls () {
 <<SELFDOC
 # USAGE:
@@ -27,31 +34,15 @@ SELFDOC
 lxd.ip () {
 <<SELFDOC
 # USAGE:
-#   lxd.ip containerName|containerId
+#   lxd.ip containerName
 #
 # DESCRIPTION
 #   Outputs containerName's ip addresses
 SELFDOC
 
     local name=${1}; shift
-    lxc info ${name}|egrep -o '([0-9]{1,3}\.){3}[0-9]{1,3}'
-}
-
-lxd.set_image () {
-<<SELFDOC
-# USAGE: lxd.set_image imageName
-#
-# DESCRIPTION:
-#   Sets LXD_IMAGE env variable to the imageName.
-#   LXD_IMAGE var is used by lxd.run when you omit its second
-#   argument, which is expected to be imageName.
-#   Upon lxd module init, if LXD_IMAGE var is not set, it
-#   will be set to 'server' value
-SELFDOC
-
-    if [[ ! -z "${1}" ]]; then
-        export LXD_IMAGE="${1}"
-    fi  
+    local ip=$(dig +short @${LXD_DNS} ${name}.${LXD_DOMAIN})
+    echo ${ip}
 }
 
 lxd.kill () {
@@ -110,6 +101,16 @@ SELFDOC
     lxc launch ${LXD_IMAGE} ${name}
 }
 
+lxd.port () {
+
+    local name=${1}; shift
+    local hostPort=${1}; shift
+    local containerPort=${1}; shift
+ 
+    local ip=$(lxd.ip ${name})
+    iptables -t nat -A PREROUTING -i eth0 -p tcp -m tcp --dport ${hostPort} -j DNAT --to ${ip}:${containerPort}
+
+}
 
 lxd.bash () {
 <<SELFDOC
@@ -148,7 +149,7 @@ SELFDOC
     if bashido.check_args_count 1 "$@"; then bashido.show_doc ${FUNCNAME}; return 1; fi
 
     local name=${1}; shift
-    local ip=$(lxd.ip ${name}|grep -v '127.0.0.1')
+    local ip=$(lxd.ip ${name})
 
     screen.set_name ${name}
     ssh ${ip}
@@ -156,4 +157,3 @@ SELFDOC
 
 }
 
-export LXD_IMAGE=${LXD_IMAGE:-server}
