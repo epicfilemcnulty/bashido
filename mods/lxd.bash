@@ -125,7 +125,7 @@ SELFDOC
     if bashido.check_args_count 1 "$@"; then bashido.show_doc ${FUNCNAME}; return 1; fi
 
     local name=${1}; shift
-    lxc exec ${name} --mode=interactive /bin/bash 
+    lxc exec ${name} --mode=interactive /bin/bash || lxc exec ${name} --mode=interactive /bin/sh
 
 }
 
