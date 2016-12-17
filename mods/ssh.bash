@@ -9,8 +9,18 @@ ssh.profile () {
 #
 SELFDOC
 
+    if bashido.check_args_count 0 "$@"; then bashido.show_doc "$FUNCNAME"; return 1; fi
+
+    # If there is no arguments provided we just output the 
+    # name of the current profile and exit
+    if [[ $# -eq 0 ]]; then
+        profileName=$(readlink ${HOME}/.ssh/config)
+        profileName=${profileName##*/}
+        echo ${profileName}
+        return
+    fi
+
     profileName=${1}
-    if bashido.check_args_count 1 "$@"; then bashido.show_doc "$FUNCNAME"; return 1; fi
     [[ -h ${HOME}/.ssh/config ]] && rm ${HOME}/.ssh/config
     [[ -h ${HOME}/.ssh/hosts ]] && rm ${HOME}/.ssh/hosts
     ln -s ${SSH_PROFILE_DIR}/${profileName} ${HOME}/.ssh/config
