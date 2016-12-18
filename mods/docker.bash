@@ -1,3 +1,8 @@
+# Bashido 
+# Copyright © 2015-2016 Vladimir Zorin
+# Licensed under GPLv3, see the full license in 
+# the LICENSE file in root folder of the project
+
 # If user is docker group or happens to be root
 # we don't need to use sudo, so we just set sudoCmd variable 
 # to an empty string 

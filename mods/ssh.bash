@@ -1,3 +1,8 @@
+# Bashido 
+# Copyright © 2015-2016 Vladimir Zorin
+# Licensed under GPLv3, see the full license in 
+# the LICENSE file in root folder of the project
+
 SSH_PROFILE_DIR="${SSH_PROFILE_DIR:-${HOME}/.ssh/profiles}"
 SSH_KNOWNHOSTS_DIR="${SSH_KNOWNHOSTS_DIR:-${HOME}/.ssh/known_hosts}"
 

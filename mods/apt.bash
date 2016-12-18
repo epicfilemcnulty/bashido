@@ -1,3 +1,8 @@
+# Bashido 
+# Copyright © 2015-2016 Vladimir Zorin
+# Licensed under GPLv3, see the full license in 
+# the LICENSE file in root folder of the project
+
 apt.update_repo () {
 <<SELFDOC
 # USAGE: apt.update_repo filename [filename]
