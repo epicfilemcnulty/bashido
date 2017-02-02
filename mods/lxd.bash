@@ -117,6 +117,24 @@ lxd.port () {
 
 }
 
+lxd.mount () {
+
+    local name=${1}; shift
+    local deviceName='data'
+    local sourceDir=${1}; shift
+    local destDir=${1}; shift
+
+    local containerRootUid=$(awk 'BEGIN {FS=":"} /lxd/ {print $2}' /etc/subuid)
+    lxc config device add ${name} ${deviceName} disk source=${sourceDir} path=${destDir}
+    sudo chown -R ${containerRootUid} ${sourceDir}
+}
+
+lxd.umount () {
+
+    local name=${1}; shift
+    local deviceName=${1}; shift
+    lxc config device remove ${name} ${deviceName}
+}
 lxd.bash () {
 <<SELFDOC
 # USAGE: lxd.bash containerName|containerId 
