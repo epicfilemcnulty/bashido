@@ -36,7 +36,7 @@ SELFDOC
 
 ssh.list_profiles () {
 
-    local list=$(find ${SSH_PROFILE_DIR}/ -type f|sed "s:${SSH_PROFILE_DIR}/::g")
+    local list=$(find ${SSH_PROFILE_DIR}/ -maxdepth 1 -type f|sed "s:${SSH_PROFILE_DIR}/::g")
     local word=${COMP_WORDS[COMP_CWORD]}
     COMPREPLY=($(compgen -W "${list}" "${word}"))
 }
