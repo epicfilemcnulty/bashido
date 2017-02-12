@@ -31,21 +31,6 @@ SELFDOC
 
 }
 
-git.enable_prompt() {
-<<SELFDOC
-#
-#
-SELFDOC
-    local uid=$(/usr/bin/id -u)
-
-    if [[ "${uid}" == "0" ]]; then
-        export PS1="\e[0;31m\u@\e[m\e[0;33m\h:\e[m\w\e[48;5;241m\e[38;5;16m\$(git.parse_branch_or_tag)\e[m$ "
-    else
-        export PS1="\e[0;32m\u@\e[m\e[0;33m\h:\e[m\w\e[48;5;241m\e[38;5;16m\$(git.parse_branch_or_tag)\e[m$ "
-    fi
-
-}
-
 git.stati () {
 <<SELFDOC
 # USAGE: git.stati
@@ -80,36 +65,5 @@ SELFDOC
         cd ${baseDir}
     done
 
-}
-
-git.parse_branch () {
-<<SELFDOC
-#
-#
-SELFDOC
-
-  git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ (\1)/'
-}
-
-git.parse_tag () {
-<<SELFDOC
-#
-#
-SELFDOC
-
-  git describe --tags 2> /dev/null
-}
-
-git.parse_branch_or_tag() {
-<<SELFDOC
-#
-#
-SELFDOC
-
-  local OUT="$(git.parse_branch)"
-  if [ "$OUT" == " ((no branch))" ]; then
-    OUT="($(git.parse_tag))";
-  fi
-  echo $OUT
 }
 
