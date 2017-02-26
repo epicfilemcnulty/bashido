@@ -279,10 +279,11 @@ SELFDOC
 
     local name=${1}; shift
     local cmd="${sudoCmd} docker exec -i -t"
+    local shell=bash
 
-    [[ ! -z "${1}" ]] 
+    [[ ! -z "${1}" ]] && shell=sh
 
-    ${cmd} ${name} /bin/bash 
+    ${cmd} ${name} /bin/${shell} 
 
 }
 
