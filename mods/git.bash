@@ -31,6 +31,18 @@ SELFDOC
 
 }
 
+git.update () {
+<<SELFDOC
+# USAGE: git.update
+#
+# DESCRIPTION:
+#   Updates the current repository & submodules
+SELFDOC
+
+    git pull
+    git submodule update --init --recursive
+}
+
 git.stati () {
 <<SELFDOC
 # USAGE: git.stati
