@@ -199,5 +199,8 @@ Locks current git repository using *git-crypt* tool.
 * **git.unlock**
 Unlocks current git repository.
 
+* **git.update** 
+Performs `git pull` and `git submodule update --init --recursive` in the current repository
+
 * **git.stati**
 Recursively searches for git repositories starting from the current directory and below. Reports each repo with "dirty" status. Can also perform git pull on every clean repo.
