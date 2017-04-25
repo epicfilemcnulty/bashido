@@ -10,7 +10,6 @@ Table of Contents
 	* [docker](#docker)
 	* [file](#file)
 	* [git](#git)
-	* [lxd](#lxd)
 	* [screen](#screen)
 
 About
