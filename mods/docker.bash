@@ -243,7 +243,7 @@ SELFDOC
     done
 }
 
-docker.run () {
+docker.start () {
 <<SELFDOC
 # USAGE: docker.run containerName [imageName|imageId]
 #
@@ -263,6 +263,22 @@ SELFDOC
 
     ${cmd} --name ${name} -h ${name} ${DOCKER_IMAGE} "${@}"
 
+}
+
+docker.run () {
+<<SELFDOC
+# USAGE: docker.run imageName [command]
+#
+# DESCRIPTION:
+#   Runs the command in an ephemeral container (container will be removed as
+#   soon as the command exits), based on imageName image.  
+#   Current directory will be mounted into the container at /code, and
+#   container's working directory will be set to /code.
+SELFDOC
+
+    local image=${1}; shift
+    local cmd="${sudoCmd} docker run --rm -v $(pwd):/code -w=/code"
+    ${cmd} ${image} "${@}"
 }
 
 docker.bash () {
