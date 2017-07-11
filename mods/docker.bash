@@ -144,22 +144,6 @@ SELFDOC
 
 }
 
-docker.set_image () {
-<<SELFDOC
-# USAGE: docker.set_image imageName
-#
-# DESCRIPTION:
-#   Sets DOCKER_IMAGE env variable to the imageName.
-#   DOCKER_IMAGE var is used by docker.run when you omit its second
-#   argument, which is expected to be imageName.
-#   Upon docker module init, if DOCKER_IMAGE var is not set, it
-#   will be set to 'server' value
-SELFDOC
-
-    if bashido.check_args_count 1 "$@"; then bashido.show_doc ${FUNCNAME}; return 1; fi
-    export DOCKER_IMAGE="${1}"
-}
-
 docker.ip () {
 <<SELFDOC
 # USAGE: docker.ip containerName|containerId
@@ -245,7 +229,7 @@ SELFDOC
 
 docker.start () {
 <<SELFDOC
-# USAGE: docker.run containerName [imageName|imageId]
+# USAGE: docker.start containerName [imageName|imageId]
 #
 # DESCRIPTION:
 #   Starts a container named containerName (hostname of the container 
@@ -257,11 +241,10 @@ SELFDOC
     if bashido.check_args_count 1 "$@"; then bashido.show_doc ${FUNCNAME}; return 1; fi
 
     local name=${1}; shift
+    local image=${1}; shift
     local cmd="${sudoCmd} docker run -d -t"
 
-    [[ ! -z "${1}" ]] && DOCKER_IMAGE="${1}"; shift
-
-    ${cmd} --name ${name} -h ${name} ${DOCKER_IMAGE} "${@}"
+    ${cmd} --name ${name} -h ${name} ${image} "${@}"
 
 }
 
@@ -276,8 +259,10 @@ docker.run () {
 #   container's working directory will be set to /code.
 SELFDOC
 
+    if bashido.check_args_count 1 "$@"; then bashido.show_doc ${FUNCNAME}; return 1; fi
+
     local image=${1}; shift
-    local cmd="${sudoCmd} docker run --rm -v $(pwd):/code -w=/code"
+    local cmd="${sudoCmd} docker run --rm -it -v $(pwd):/code -w=/code"
     ${cmd} ${image} "${@}"
 }
 
@@ -302,6 +287,4 @@ SELFDOC
     ${cmd} ${name} /bin/${shell} 
 
 }
-
-export DOCKER_IMAGE=${DOCKER_IMAGE:-server}
 
