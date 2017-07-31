@@ -84,7 +84,7 @@ SELFDOC
     local csrFile=${1}; shift
     local outFile=${csrFile%.csr}.crt
     
-    SANS=$(cert.rinspect ${csrFile} 2>&1|grep DNS) openssl ca -batch -notext -config certAuth/ca.cnf -name certAuth -in ${csrFile} -out ${outFile} -extensions v3_req -extfile certAuth/req.cnf
+    openssl ca -batch -notext -config certAuth/ca.cnf -name certAuth -in ${csrFile} -out ${outFile} -extensions v3_req -extfile certAuth/req.cnf
 
 }
 
