@@ -4,7 +4,7 @@
 # the LICENSE file in root folder of the project
 
 SSH_PROFILE_DIR="${SSH_PROFILE_DIR:-${HOME}/.ssh/profiles}"
-SSH_KNOWNHOSTS_DIR="${SSH_KNOWNHOSTS_DIR:-${HOME}/.ssh/known_hosts}"
+SSH_KNOWNHOSTS_DIR="${SSH_KNOWNHOSTS_DIR:-${HOME}/.ssh/hosts}"
 
 ssh.profile () {
 <<SELFDOC
