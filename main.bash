@@ -64,7 +64,7 @@ bashido.functions_list () {
 #   There is no need to invoke this function manually. Although you certainly can.
 SELFDOC
 
-    funcList=$(declare -F|sed 's/declare -f //g'|sed '/^_/d')
+    funcList=$(declare -F|sed 's/declare -f //g'|sed -n -r '/[a-z]+\./p')
     local word=${COMP_WORDS[COMP_CWORD]}
     local fmtList=$(tr '\n' ' ' <<< "${funcList}")
     COMPREPLY=($(compgen -W "${FMTLIST}" "${word}"))

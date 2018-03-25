@@ -27,11 +27,11 @@ SELFDOC
 
     profileName=${1}
     [[ -h ${HOME}/.ssh/config ]] && rm ${HOME}/.ssh/config
-    [[ -h ${HOME}/.ssh/hosts ]] && rm ${HOME}/.ssh/hosts
+    [[ -h ${HOME}/.ssh/known_hosts ]] && rm ${HOME}/.ssh/known_hosts
     [[ -h ${HOME}/.ssh/keys ]] && rm ${HOME}/.ssh/keys
     ln -s ${SSH_PROFILE_DIR}/${profileName} ${HOME}/.ssh/config
     ln -s ${SSH_PROFILE_DIR}/keys/${profileName} ${HOME}/.ssh/keys
-    ln -s ${SSH_KNOWNHOSTS_DIR}/${profileName} ${HOME}/.ssh/hosts
+    ln -s ${SSH_KNOWNHOSTS_DIR}/${profileName} ${HOME}/.ssh/known_hosts
 }
 
 ssh.list_profiles () {
