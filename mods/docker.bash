@@ -13,6 +13,25 @@ else
     export sudoCmd=sudo
 fi
 
+DOCKER_COMPOSE_DIR="${DOCKER_COMPOSE_DIR:-/etc/docker-compose}"
+
+docker.compose_list () {
+    local list=""
+    for file in /etc/docker-compose/*.yml; do 
+        list="${list}${file##*/}"$'\n'
+    done
+    local word=${COMP_WORDS[COMP_CWORD]}
+    COMPREPLY=($(compgen -W "${list}" "${word}"))
+}
+docker.compose () {
+
+    local compose_file="${1}"; shift
+    docker-compose -f "${DOCKER_COMPOSE_DIR}/${compose_file}" -p "${compose_file%%.yml}" "${@}"
+
+}
+
+complete -F docker.compose_list docker.compose
+
 docker.bootstrap () {
 <<SELFDOC
 # USAGE: docker.bootstrap debian|ubuntu [release] [imageName]

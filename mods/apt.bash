@@ -30,6 +30,11 @@ SELFDOC
     done
 }
 
+apt.manually_installed () {
+
+  comm -23 <(apt-mark showmanual | sort -u) <(gzip -dc /var/log/installer/initial-status.gz | sed -n 's/^Package: //p' | sort -u)
+}
+
 apt.repas_list () {
 
     local ppaList=$(find /etc/apt/sources.list.d/ -name "*.list"|sed 's:/etc/apt/sources.list.d/::')

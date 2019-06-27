@@ -34,6 +34,14 @@ SELFDOC
     ln -s ${SSH_KNOWNHOSTS_DIR}/${profileName} ${HOME}/.ssh/known_hosts
 }
 
+ssh.remove () {
+
+    host="${1}"
+    knownHosts=$(readlink ${HOME}/.ssh/known_hosts)
+    ssh-keygen -f "${knownHosts}" -R "${host}"
+
+}
+
 ssh.list_profiles () {
 
     local list=$(find ${SSH_PROFILE_DIR}/ -maxdepth 1 -type f|sed "s:${SSH_PROFILE_DIR}/::g")
